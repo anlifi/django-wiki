@@ -46,7 +46,12 @@ def entry(request, title):
         "title": title,
         "entry": markdowner.convert(entry)
     })
-    
+
+
+# Redirect entry page
+def redirect_entry(request, title):
+    return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
+
 
 # Show entry page if match, else show search results containing search
 def search(request):
