@@ -38,11 +38,13 @@ def entry(request, title):
     entry = util.get_entry(title)
     if not entry:
         return render(request, "encyclopedia/error.html", {
+            "search": SearchForm(auto_id=False),
             "title": title
         })
     
     markdowner = Markdown()
     return render(request, "encyclopedia/entry.html", {
+        "search": SearchForm(auto_id=False),
         "title": title,
         "entry": markdowner.convert(entry)
     })
@@ -64,11 +66,13 @@ def search(request):
                 return HttpResponseRedirect(reverse("entry", kwargs={"title": q}))
             
             return render(request, "encyclopedia/search.html", {
+                "search": SearchForm(auto_id=False),
                 "results": [s for s in entries if q.lower() in s.lower()]
             })
     
     # Show emtpy results
     return render(request, "encyclopedia/search.html", {
+        "search": SearchForm(auto_id=False),
         "results": []
     })
 
@@ -85,6 +89,7 @@ def new(request):
             # Show error alert if title already exists
             if title.lower() in [entry.lower() for entry in entries]:
                 return render(request, "encyclopedia/new.html", {
+                    "search": SearchForm(auto_id=False),
                     "form": form,
                     "error": True
                 })
@@ -95,6 +100,7 @@ def new(request):
 
     # Show new page entry form
     return render(request, "encyclopedia/new.html", {
+        "search": SearchForm(auto_id=False),
         "form": NewEntryForm(auto_id=False)
     })
 
@@ -113,6 +119,7 @@ def edit(request, title):
     # Get content of page and show edit page form including existing content
     entry = util.get_entry(title)
     return render(request, "encyclopedia/edit.html", {
+        "search": SearchForm(auto_id=False),
         "title": title,
         "form": EditEntryForm(initial={"content": entry})
     })
