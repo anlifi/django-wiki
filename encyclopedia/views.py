@@ -7,15 +7,18 @@ from markdown2 import Markdown
 from . import util
 
 
+# Form for search field in search bar
 class SearchForm(forms.Form):
     q = forms.CharField(label="", widget=forms.TextInput(attrs={"placeholder": "Search Encyclopedia", "class": "search"}))
 
 
+# Form for new page entry
 class NewEntryForm(forms.Form):
     title = forms.CharField(label="", widget=forms.TextInput(attrs={"placeholder": "Title", "class": "row"}))
     content = forms.CharField(label="", widget=forms.Textarea(attrs={"placeholder": "Markdown Content", "rows": "5", "class": "row"}))
 
 
+# List all entries
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "search": SearchForm(),
@@ -23,6 +26,7 @@ def index(request):
     })
 
 
+# Show entry page if exists, else error page
 def entry(request, title):
     entry = util.get_entry(title)
     if not entry:
@@ -37,6 +41,7 @@ def entry(request, title):
     })
     
 
+# Show entry page if match, else show search results containing search
 def search(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
@@ -50,11 +55,13 @@ def search(request):
                 "results": [s for s in entries if q.lower() in s.lower()]
             })
     
+    # Show emtpy results
     return render(request, "encyclopedia/search.html", {
         "results": []
     })
 
 
+# Create new page entry
 def new(request):
     if request.method == "POST":
         form = NewEntryForm(request.POST)
@@ -62,15 +69,19 @@ def new(request):
             title:str = form.cleaned_data["title"]
             content:str = form.cleaned_data["content"]
             entries = util.list_entries()
+
+            # Show error alert if title already exists
             if title.lower() in [entry.lower() for entry in entries]:
                 return render(request, "encyclopedia/new.html", {
                     "form": form,
                     "error": True
                 })
 
+            # Save and redirect to new entry page
             util.save_entry(title, content)
             return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
 
+    # Show new page entry form
     return render(request, "encyclopedia/new.html", {
         "form": NewEntryForm()
     })
