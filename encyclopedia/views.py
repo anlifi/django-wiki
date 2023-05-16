@@ -1,3 +1,5 @@
+import random
+
 from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -109,3 +111,8 @@ def edit(request, title):
         "title": title,
         "form": EditEntryForm(initial={"content": entry})
     })
+
+
+# Random entry page
+def random_page(request):
+    return HttpResponseRedirect(reverse("entry", kwargs={"title": random.choice(util.list_entries())}))
