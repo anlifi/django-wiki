@@ -37,7 +37,7 @@ form.new>input {
     padding: .1rem .5rem;
 }
 
-form.new>.row {
+form.new>.row, form.edit>.row {
     margin: 1rem .1rem;
 }
 

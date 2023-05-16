@@ -18,10 +18,15 @@ class NewEntryForm(forms.Form):
     content = forms.CharField(label="", widget=forms.Textarea(attrs={"placeholder": "Markdown Content", "rows": "5", "class": "row"}))
 
 
+# From for editing page entry
+class EditEntryForm(forms.Form):
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={"rows": "5", "class": "row"}))
+
+
 # List all entries
 def index(request):
     return render(request, "encyclopedia/index.html", {
-        "search": SearchForm(),
+        "search": SearchForm(auto_id=False),
         "entries": util.list_entries()
     })
 
@@ -83,5 +88,24 @@ def new(request):
 
     # Show new page entry form
     return render(request, "encyclopedia/new.html", {
-        "form": NewEntryForm()
+        "form": NewEntryForm(auto_id=False)
+    })
+
+
+# Edit page entry
+def edit(request, title):
+    if request.method == "POST":
+        form = EditEntryForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data["content"]
+
+            # Save edited page entry and redirect to entry
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
+
+    # Get content of page and show edit page form including existing content
+    entry = util.get_entry(title)
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "form": EditEntryForm(initial={"content": entry})
     })
