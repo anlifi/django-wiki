@@ -8,7 +8,7 @@ from . import util
 
 
 class SearchForm(forms.Form):
-    q = forms.CharField(label="", widget=forms.TextInput(attrs={"placeholder": "Search Encyclopedia"}))
+    q = forms.CharField(label="", widget=forms.TextInput(attrs={"placeholder": "Search Encyclopedia", "class": "search"}))
 
 
 class NewEntryForm(forms.Form):
