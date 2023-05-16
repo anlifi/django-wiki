@@ -11,19 +11,24 @@
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
-                <h2>Wiki</h2>
-                <form action="{% url 'search' %}" method="post">
-                    {% csrf_token %}
-                    {{ search }}
-                </form>
-                <div>
-                    <a href="{% url 'index' %}">Home</a>
+                <div class="text-center">
+                    <img alt="Wikipedia Logo" src="https://png2.cleanpng.com/sh/96e564b751684255e713a8294e19646b/L0KzQYm3VMIxN6NsfZH0aYP2gLBuTgdqc5p1fdZyYT3vf7j2Tf9vdJpzfZ9ubnP8c732kPVlcZIyj9t0aX3odLroTfZwfZ9pReNAZT24cbXoUvFlOJI4eaY9Nj66R4i4Vcg5PmI6SqY7NEe1RIm9V8A0NqFzf3==/kisspng-wikipedia-logo-online-encyclopedia-wikimedia-found-que-5ada2ad0a3a446.7771588615242472486703.png">
+                    <h2>Wiki</h2>
                 </div>
-                <div>
-                    <a href="{% url 'new' %}">Create New Page</a>
-                </div>
-                <div>
-                    <a href="{% url 'random' %}">Random Page</a>
+                <div class="container-fluid">
+                    <form action="{% url 'search' %}" method="post">
+                        {% csrf_token %}
+                        {{ search }}
+                    </form>
+                    <div>
+                        <a href="{% url 'index' %}">Home</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'new' %}">Create New Page</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'random' %}">Random Page</a>
+                    </div>
                 </div>
                 {% block nav %}
                 {% endblock %}

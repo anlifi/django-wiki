@@ -14,6 +14,7 @@ code {
 h1 {
     margin-top: 0px;
     padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 textarea {
@@ -42,7 +43,7 @@ form.new>.row, form.edit>.row {
 }
 
 .main {
-    padding: 10px;
+    padding: 20px 10px 10px 20px;
 }
 
 .search {
@@ -55,9 +56,9 @@ form.new>.row, form.edit>.row {
 .sidebar {
     background-color: #f0f0f0;
     height: 100vh;
-    padding: 20px;
+    padding: 10px 10px 10px 25px;
 }
 
-.sidebar h2 {
-    margin-top: 5px;
+.sidebar img {
+    max-width: 80%;
 }
